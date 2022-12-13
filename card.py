@@ -4,8 +4,8 @@ class Card:
     """determines which cards are higher and what cards are special
     
     Attributes:
-        suit: card symbols 'club', 'diamond', 'hearts', 'spade'
-        facevalue: 'J','Q','K','A'
+        suit(str): card symbols 'club', 'diamond', 'hearts', 'spade'
+        facevalue(str): 2-10, 'J','Q','K','A'
         
     """
     
@@ -15,10 +15,11 @@ class Card:
     
     def __init__(self, suit, facevalue):
         """
+        initialized suit and facevalue, creates value for 'J',"q",'K',"A"
         
         Attributes:
-            suit: card symbols 'club', 'diamond', 'hearts', 'spade'
-            facevalue: 'J','Q','K','A'
+            suit(str): card symbols 'club', 'diamond', 'hearts', 'spade'
+            facevalue(str): 2-10,'J','Q','K','A'
             
         """
         self.suit = suit
@@ -37,7 +38,7 @@ class Card:
                 
         
     def __str__(self):
-        """gives us each card
+        """gives us each card (informal string representation)
         
         returns: card formatted facevalue suit
         
@@ -53,7 +54,7 @@ class Card:
         return f"{self.facevalue}{self.suit}"
     
     def __ge__(self, othercard):
-        """greater than or equal to
+        """comparing the cards of AI player and human player (exception for 2 and 10)
         
         Args:
             othercard: othercard being compared
@@ -68,7 +69,7 @@ class Card:
             return self.value >= othercard.value
         
     def __eq__(self, othercard):
-        """use this to check if a card is in the player's hand
+        """use this to check if player has playable card
         
         Args: 
             othercard: othercard being compared

@@ -8,20 +8,29 @@ import argparse
 #Alisha Hukmani worked on this entire file
 class Game:
     """Creates the functionality of the card game that allows the game to come together
+    
+    Attributes:
+        name(str): name of human player
+        humanPlayer(Human object): creates the human player
+        AIplayer(AI object): creates the AI player
     """
     
     def __init__(self, name):
-        """Creates the game
+        """Creates the game and initalizes the attributes of the game
 
         Args:
-            name (Game): nsme of human player
+            name (str): name of human player
+            
         """
         self.humanPlayer = Human(name)
         self.AIplayer = AI()
         self.newGame() 
         
     def createDeck(self):
-        """ Creates functinality to access the deck and use it
+        """ Creates functinality to access the deck and use it by reading and parsing through textfile. Randomly shuffles the cards in deck
+        
+        Side effect: 
+            Appends cards to deck
         """
         self.deck = []
         with open("cards.txt", "r") as f:
@@ -40,7 +49,13 @@ class Game:
         random.shuffle(self.deck)
         
     def draw(self):
-        """Drawing card from deck
+        """Draws card from deck
+        
+        Side effect: 
+            Pops cards to deck
+        
+        Returns:
+            Card that was taken out of deck
         """
         if len(self.deck) > 0:
             card = self.deck.pop()
@@ -49,11 +64,14 @@ class Game:
             return None
         
     def deal(self):
-        """Deal starting cards to players
+        """Deals starting cards to players
+        
+        Sife effects:
+            Appends the cards to player's hands(list)
         """
         humancards = [] 
         
-        numCards = 5 #can change if wanan play with more cards
+        numCards = 5 #can change if wanna play with more cards
         
         for i in range(numCards):
             card = self.draw()
@@ -69,6 +87,9 @@ class Game:
     
     def isGameOver(self):
         """Check to see if game is over by assessing if players have cards 
+        
+        Return:
+            boolean: if the game is over return true, if the game is not over, return false
         """
         if not self.humanPlayer.hasCards():
             #game is over
@@ -81,6 +102,8 @@ class Game:
             
     def playRound(self):
         """Creates a single round of the game
+        
+        Side effect: Prints out status of the game, depending on player's decision
         """
         print(self.humanPlayer)
         if not self.humanPlayer.hasPlayableCard(self.discard):
@@ -155,6 +178,9 @@ class Game:
     
     def __repr__(self):
         """Representation of the current state of the game 
+        
+        Return:
+            gameState(str): status of the game
         """
         gameState = "===========================================\n"
         gameState += f"Remaining cards: {len(self.deck)}\n"
@@ -168,7 +194,7 @@ class Game:
         return gameState 
     
     def newGame(self):
-        """Creates a new game 
+        """Creates a new game
         """
         self.createDeck()
         self.deal()
@@ -178,7 +204,10 @@ class Game:
         #pile of cards, if player cannot play any cards they have to pick up this pile and add to their hand
     
     def winner(self):
-        """Determines the winner of the game and prints out a response according to who won.
+        """Determines the winner of the game
+        
+        Side effect:
+            Prints out a response according to who won
         """
         if not self.humanPlayer.hasCards():
             print(f"{self.humanPlayer.name} wins! Yay.")
@@ -189,7 +218,7 @@ def runGame(name):
     """Allows the game to run
 
     Args:
-        name (Game): takes in the name of the human
+        name(str): takes in the name of the human player
     """
     game = Game(name)
     print(game)
